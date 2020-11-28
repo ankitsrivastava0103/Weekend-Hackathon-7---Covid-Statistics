@@ -40,6 +40,27 @@ app.get("/totalDeath", (req, res) => {
   res.status(200).json({ data: { _id: "total", death: totalDeath } });
 });
 
+app.get("/hotspotStates", (req, res) => {
+  let hotspotData = [];
+  for (let i = 0; i < dataArray.length; i++) {
+    let rate =
+      (dataArray[i].infected - dataArray[i].recovered) / dataArray[i].infected;
+    rate = rate.toFixed(5);
+    if (rate > 0.1) {
+      hotspotData.push({ state: dataArray[i].state, rate: rate });
+    }
+  }
+  res.status(200).json({ data: hotspotData });
+});
+
+app.get("/healthyStates", (req, res) => {
+  let totalDeath = 0;
+  for (let i = 0; i < dataArray.length; i++) {
+    totalDeath = totalDeath + dataArray[i].death;
+  }
+  res.status(200).json({ data: { _id: "total", death: totalDeath } });
+});
+
 app.listen(port, () => console.log(`App listening on port ${port}!`));
 
 module.exports = app;
