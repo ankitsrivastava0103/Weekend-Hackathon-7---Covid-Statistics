@@ -50,6 +50,7 @@ app.get("/hotspotStates", (req, res) => {
       hotspotData.push({ state: dataArray[i].state, rate: rate });
     }
   }
+  console.log(hotspotData.length);
   res.status(200).json({ data: hotspotData });
 });
 
@@ -58,10 +59,11 @@ app.get("/healthyStates", (req, res) => {
   for (let i = 0; i < dataArray.length; i++) {
     let rate = dataArray[i].death / dataArray[i].infected;
     rate = rate.toFixed(5);
-    if (rate > 0.005) {
+    if (rate < 0.005) {
       healthyStates.push({ state: dataArray[i].state, mortality: rate });
     }
   }
+  //console.log(healthyStates.length);
   res.status(200).json({ data: healthyStates });
 });
 
