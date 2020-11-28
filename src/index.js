@@ -19,6 +19,19 @@ app.get("/totalRecovered", (req, res) => {
   res.status(200).json({ data: { _id: "total", recovered: totalRecovered } });
 });
 
+app.get("/totalActive", (req, res) => {
+  let totalRecovered = 0;
+  let totalInfected = 0;
+  for (let i = 0; i < dataArray.length; i++) {
+    totalRecovered = totalRecovered + dataArray[i].recovered;
+  }
+  for (let i = 0; i < dataArray.length; i++) {
+    totalInfected = totalInfected + dataArray[i].infected;
+  }
+  let active = totalInfected - totalRecovered;
+  res.status(200).json({ data: { _id: "active", recovered: active } });
+});
+
 app.listen(port, () => console.log(`App listening on port ${port}!`));
 
 module.exports = app;
