@@ -59,7 +59,7 @@ app.get("/healthyStates", (req, res) => {
     let rate = dataArray[i].death / dataArray[i].infected;
     rate = rate.toFixed(5);
     if (rate > 0.005) {
-      healthyStates.push({ state: dataArray[i].state, rate: rate });
+      healthyStates.push({ state: dataArray[i].state, mortality: rate });
     }
   }
   res.status(200).json({ data: healthyStates });
